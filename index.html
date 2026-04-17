@@ -849,8 +849,20 @@ function render() {
 
 // ==================== GAME LOOP ====================
 function gameLoop() {
-  update();
-  render();
+  if (gameState === 'playing') {
+    update();
+    render();
+  } else if (gameState === 'start') {
+    // Draw start screen background
+    const grad = ctx.createLinearGradient(0, 0, 0, GAME_HEIGHT);
+    grad.addColorStop(0, '#5c94fc');
+    grad.addColorStop(1, '#87CEEB');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+  } else if (gameState === 'win') {
+    render();
+  }
+  // For gameover state, keep last frame visible
   requestAnimationFrame(gameLoop);
 }
 
